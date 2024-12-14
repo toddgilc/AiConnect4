@@ -34,10 +34,10 @@ void Board::displayBoard()
                 std::cout << BGcol << ".";
                 break;
             case BOARD_SQUARE_STATE::RED:
-                std::cout << redCol << "0";
+                std::cout << redCol << BGcol << "0";
                 break;
             case BOARD_SQUARE_STATE::YELLOW:
-                std::cout << yellowCol << "0";
+                std::cout << yellowCol << BGcol << "0";
                 break;
             default:
                 break;
@@ -45,16 +45,26 @@ void Board::displayBoard()
             std::cout << underlinecol << "     ";
         }
         std::cout << std::endl;
-        //std::cout << std::endl;
+        std::cout << resetcol << "";
     }
-    std::cout << resetcol << ".";
+    std::cout << resetcol << "";
 }
 
 void Board::makeMove(int posChoice, int currentPlayer)
 {
-    if (currentPlayer == 1) { board[1][posChoice] = BOARD_SQUARE_STATE::YELLOW; }
-    if (currentPlayer == 2) { board[1][posChoice] = BOARD_SQUARE_STATE::RED; }
- 
+    BOARD_SQUARE_STATE piece = NONE;
+
+    if (currentPlayer == 1) { piece = BOARD_SQUARE_STATE::YELLOW; }
+    else if (currentPlayer == 2) { piece = BOARD_SQUARE_STATE::RED; }   //setting players colour
+
+    for (int i = boardY; i >= 0; i--)   //
+    {
+        if (board[i][posChoice] == BOARD_SQUARE_STATE::NONE)
+        {
+            board[i][posChoice] = piece;
+            break; //so only draws 1 piece not whole row
+        }
+    }
 }
 
 BOARD_SQUARE_STATE Board::checkWin()

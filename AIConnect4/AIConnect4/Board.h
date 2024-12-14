@@ -24,7 +24,7 @@ public:
 	void makeMove(int posChoice, int currentPlayer);
 	BOARD_SQUARE_STATE checkWin();
 
-	const char* resetcol = "\033[40m"; 
+	const char* resetcol = "\033[0m"; 
 	const char* underlinecol = "\033[4;34m";
 	const char* BGcol = "\033[47m"; //white
 	const char* redCol = "\033[1;31m"; //red

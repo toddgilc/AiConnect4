@@ -5,12 +5,12 @@ bool validatePosition(int placement, Board gameBoard)
 {
     if (placement < 0 || placement > 6) {
 
-        std::cout << "Invlid position: Enter a value 0-6" << std::endl;
+        std::cout << "Invalid position: Enter a value 0-6" << std::endl;
         return false;
     }
    
     //add check for full row
-    if (gameBoard.board[placement][5] != BOARD_SQUARE_STATE::NONE)
+    if (gameBoard.board[placement][0] != BOARD_SQUARE_STATE::NONE)
     {
         std::cout << "Row full: Enter a different position" << std::endl;
         return false;
@@ -54,6 +54,7 @@ int main()
         std::cout << "Players move...." << std::endl;
         bool validMove = true;
         int placement = -1;
+
         do {
 
             placement = -1;
