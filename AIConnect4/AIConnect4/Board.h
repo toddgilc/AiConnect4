@@ -16,13 +16,16 @@ public:
 	
 	int getCurrentPlayer() { return currentPlayer; };	
 	void setCurrentPlayer(int chosenPlayer) { currentPlayer = chosenPlayer; };
-	BOARD_SQUARE_STATE getBoardAtPos(int x, int y) { return board[x][y]; };
+	BOARD_SQUARE_STATE getBoardAtPos(int y, int x) { return board[y][x]; };
 
 	//functions for in play
 	void startGame();
 	void displayBoard();
 	void makeMove(int posChoice, int currentPlayer);
 	BOARD_SQUARE_STATE checkWin();
+	bool checkDown(int y, int x);
+	bool checkSides(int y, int x);
+	bool checkDiag(int y, int x);
 
 	const char* resetcol = "\033[0m"; 
 	const char* underlinecol = "\033[4;34m";
