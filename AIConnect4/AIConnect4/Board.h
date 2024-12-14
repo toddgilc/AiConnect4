@@ -23,9 +23,12 @@ public:
 	void displayBoard();
 	void makeMove(int posChoice, int currentPlayer);
 	BOARD_SQUARE_STATE checkWin();
+	bool checkDown(int x, int y);
+	bool checkSides(int x, int y);
+	bool checkDiag(int x, int y);
 
-	const char* resetcol = "\033[0m"; 
-	const char* underlinecol = "\033[4;34m";
+	const char* resetcol = "\033[0m"; //reset
+	const char* underlinecol = "\033[4;34m";	//blue underline
 	const char* BGcol = "\033[47m"; //white
 	const char* redCol = "\033[1;31m"; //red
 	const char* yellowCol = "\033[1;33m"; //yellow
