@@ -15,11 +15,13 @@ public:
 	~Board();
 	
 	int getCurrentPlayer() { return currentPlayer; };	
+	void setCurrentPlayer(int chosenPlayer) { currentPlayer = chosenPlayer; };
+	//BOARD_SQUARE_STATE getBoard() { return board[][]; };
 
 	//functions for in play
 	void startGame();
 	void displayBoard();
-	void makeMove(int posChoice);
+	void makeMove(int posChoice, int currentPlayer);
 	BOARD_SQUARE_STATE checkWin();
 
 	const char* resetcol = "\033[40m"; 
@@ -27,10 +29,9 @@ public:
 	const char* BGcol = "\033[47m"; //white
 	const char* redCol = "\033[1;31m"; //red
 	const char* yellowCol = "\033[1;33m"; //yellow
-
+	BOARD_SQUARE_STATE board[7][6]{ { BOARD_SQUARE_STATE::NONE } }; //board size 
 private:
 
-	BOARD_SQUARE_STATE board[7][6]{ { BOARD_SQUARE_STATE::NONE } }; //board size 
 	int currentPlayer = 1; //first player is AI
 
 };

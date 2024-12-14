@@ -45,14 +45,16 @@ void Board::displayBoard()
             std::cout << underlinecol << "     ";
         }
         std::cout << std::endl;
-        std::cout << std::endl;
+        //std::cout << std::endl;
     }
     std::cout << resetcol << ".";
 }
 
-void Board::makeMove(int posChoice)
+void Board::makeMove(int posChoice, int currentPlayer)
 {
-
+    if (currentPlayer == 1) { board[1][posChoice] = BOARD_SQUARE_STATE::YELLOW; }
+    if (currentPlayer == 2) { board[1][posChoice] = BOARD_SQUARE_STATE::RED; }
+ 
 }
 
 BOARD_SQUARE_STATE Board::checkWin()
