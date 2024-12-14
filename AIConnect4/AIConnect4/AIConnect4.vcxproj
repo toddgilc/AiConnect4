@@ -127,15 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AIConnect4Node.cpp" />
-    <ClCompile Include="GameBoard.cpp" />
-    <ClCompile Include="GameState.cpp" />
-    <ClCompile Include="MCTS.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="AIConnect4Node.h" />
-    <ClInclude Include="GameBoard.h" />
-    <ClInclude Include="GameState.h" />
+    <ClCompile Include="AIConnect4.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
