@@ -16,7 +16,7 @@ public:
 	
 	int getCurrentPlayer() { return currentPlayer; };	
 	void setCurrentPlayer(int chosenPlayer) { currentPlayer = chosenPlayer; };
-	//BOARD_SQUARE_STATE getBoard() { return board[][]; };
+	BOARD_SQUARE_STATE getBoardAtPos(int x, int y) { return board[x][y]; };
 
 	//functions for in play
 	void startGame();
@@ -29,7 +29,7 @@ public:
 	const char* BGcol = "\033[47m"; //white
 	const char* redCol = "\033[1;31m"; //red
 	const char* yellowCol = "\033[1;33m"; //yellow
-	BOARD_SQUARE_STATE board[7][6]{ { BOARD_SQUARE_STATE::NONE } }; //board size 
+	BOARD_SQUARE_STATE board[6][7]{ { BOARD_SQUARE_STATE::NONE } }; //board size 
 private:
 
 	int currentPlayer = 1; //first player is AI

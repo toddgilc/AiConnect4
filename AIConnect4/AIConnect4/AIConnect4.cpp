@@ -10,7 +10,7 @@ bool validatePosition(int placement, Board gameBoard)
     }
    
     //add check for full row
-    if (gameBoard.board[placement][0] != BOARD_SQUARE_STATE::NONE)
+    if (gameBoard.getBoardAtPos(0, placement) != BOARD_SQUARE_STATE::NONE) //inverted inputs here !
     {
         std::cout << "Row full: Enter a different position" << std::endl;
         return false;

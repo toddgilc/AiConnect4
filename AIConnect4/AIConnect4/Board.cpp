@@ -18,7 +18,6 @@ void Board::startGame()
         {
             board[i][j] = NONE; //setting up a blank 7x6 board
         }
-        std::cout << std::endl;
     }
 }
 
@@ -44,20 +43,20 @@ void Board::displayBoard()
             }
             std::cout << underlinecol << "     ";
         }
-        std::cout << std::endl;
-        std::cout << resetcol << "";
+        std::cout << resetcol << "" << std::endl;
+       
     }
-    std::cout << resetcol << "";
+    //std::cout << resetcol << "";
 }
 
 void Board::makeMove(int posChoice, int currentPlayer)
 {
-    BOARD_SQUARE_STATE piece = NONE;
+    BOARD_SQUARE_STATE piece = BOARD_SQUARE_STATE::NONE;
 
     if (currentPlayer == 1) { piece = BOARD_SQUARE_STATE::YELLOW; }
     else if (currentPlayer == 2) { piece = BOARD_SQUARE_STATE::RED; }   //setting players colour
 
-    for (int i = boardY; i >= 0; i--)   //
+    for (int i = boardY; i >= 0; i--)   
     {
         if (board[i][posChoice] == BOARD_SQUARE_STATE::NONE)
         {
