@@ -19,7 +19,7 @@ public:
 	//functions for in play
 	void startGame();
 	void displayBoard();
-	void makeMove();
+	void makeMove(int posChoice);
 	BOARD_SQUARE_STATE checkWin();
 
 	const char* resetcol = "\033[40m"; 

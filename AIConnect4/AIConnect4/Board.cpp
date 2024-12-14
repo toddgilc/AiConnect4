@@ -10,6 +10,8 @@ Board::~Board()
 
 void Board::startGame() 
 {
+    currentPlayer = 1;
+
     for (int i = 0; i < boardY + 1; i++)
     {
         for (int j = 0; j < boardX + 1; j++)
@@ -48,7 +50,7 @@ void Board::displayBoard()
     std::cout << resetcol << ".";
 }
 
-void Board::makeMove()
+void Board::makeMove(int posChoice)
 {
 
 }
