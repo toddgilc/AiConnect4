@@ -24,32 +24,11 @@ int main()
     Board gameBoard;
     bool gameOver = false;
 
-    gameBoard.startGame();
-    gameBoard.startNewGame();
-    //gameBoard.displayBoard();
+    //gameBoard.startGame();
+
+    gameBoard.displayBoard();
     int count = 0;
     do {
-       /* std::cout << "AI is thinking...." << std::endl;
-        int aiChoice = rand() % 7;
-        std::cout << "The AI selected move is " << aiChoice << std::endl;
-        
-        gameBoard.makeMove(aiChoice);
-
-        gameBoard.displayBoard();
-        BOARD_SQUARE_STATE winner = gameBoard.checkWin();
-
-        if (winner == BOARD_SQUARE_STATE::RED)
-        {
-            gameOver = true;
-            std::cout << "RED WINS!" << std::endl;
-            break;
-        }
-        else if (winner == BOARD_SQUARE_STATE::BLUE)
-        {
-            gameOver = true;
-            std::cout << "BLUE WINS!" << std::endl;
-            break;
-        }*/
 
         if (count % 2 == 0)
         {
@@ -73,7 +52,7 @@ int main()
         } while (!validMove);
         
         gameBoard.makeMove(placement, gameBoard.getCurrentPlayer());
-        gameBoard.startNewGame();
+        gameBoard.displayBoard();
 
         count++;
         BOARD_SQUARE_STATE winner = gameBoard.checkWin();

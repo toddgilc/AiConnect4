@@ -20,7 +20,6 @@ public:
 
 	//functions for in play
 	void startGame();
-	void startNewGame();
 	void displayBoard();
 	void makeMove(int posChoice, int currentPlayer); //move struct
 	BOARD_SQUARE_STATE checkWin();

@@ -16,41 +16,18 @@ void Board::startGame()
     {
         for (int j = 0; j < boardX + 1; j++)
         {
-            board[i][j] = NONE; //setting up a blank 7x6 board
+            board[i][j] = BOARD_SQUARE_STATE::NONE; //setting up a blank 7x6 board
         }
-    }
-}
-
-void Board::startNewGame()
-{
-    for (int x = 0; x < 6; x++)
-    {
-        for (int y = 0; y < 7; y++)
-        {
-            switch (board[x][y])
-            {
-            case(BOARD_SQUARE_STATE::NONE):
-                std::cout << BGcol << "0";
-                    break;
-            case(BOARD_SQUARE_STATE::RED):
-                std::cout << redCol << "1";
-                    break;
-            case(BOARD_SQUARE_STATE::BLUE):
-                std::cout << blueCol << "2";
-                    break;
-            }
-        }
-        std::cout << resetcol << std::endl;
     }
 }
 
 void Board::displayBoard() 
 {
-    for (int i = 0; i < boardY + 1; i++)
+    for (int y = 0; y < boardY + 1; y++)
     {
-        for (int j = 0; j < boardX + 1; j++)
+        for (int x = 0; x < boardX + 1; x++)
         {
-            switch (board[i][j])
+            switch (board[x][y])
             {
             case BOARD_SQUARE_STATE::NONE:
                 std::cout << BGcol << ".";
@@ -81,9 +58,9 @@ void Board::makeMove(int posChoice, int currentPlayer)
 
     for (int i = boardY; i > -1; i--)   
     {
-        if (board[i][posChoice] == BOARD_SQUARE_STATE::NONE)
+        if (board[posChoice][i] == BOARD_SQUARE_STATE::NONE)    //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
         {
-            board[i][posChoice] = piece;
+            board[posChoice][i] = piece;
             return; //so only draws 1 piece not whole row
         }
     }
