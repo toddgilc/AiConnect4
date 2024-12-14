@@ -10,7 +10,7 @@ bool validatePosition(int placement, Board gameBoard)
     }
    
     //add check for full row
-    if (gameBoard.getBoardAtPos(0, placement) != BOARD_SQUARE_STATE::NONE) //inverted inputs here !
+    if (gameBoard.getBoardAtPos(placement, 0) != BOARD_SQUARE_STATE::NONE) //inverted inputs here !
     {
         std::cout << "Row full: Enter a different position" << std::endl;
         return false;
@@ -24,9 +24,9 @@ int main()
     Board gameBoard;
     bool gameOver = false;
 
-    std::cout << "Hello World!\n";
     gameBoard.startGame();
-    gameBoard.displayBoard();
+    gameBoard.startNewGame();
+    //gameBoard.displayBoard();
     int count = 0;
     do {
        /* std::cout << "AI is thinking...." << std::endl;
@@ -44,10 +44,10 @@ int main()
             std::cout << "RED WINS!" << std::endl;
             break;
         }
-        else if (winner == BOARD_SQUARE_STATE::YELLOW)
+        else if (winner == BOARD_SQUARE_STATE::BLUE)
         {
             gameOver = true;
-            std::cout << "YELLOW WINS!" << std::endl;
+            std::cout << "BLUE WINS!" << std::endl;
             break;
         }*/
 
@@ -59,11 +59,11 @@ int main()
        
         std::cout << "Players move...." << std::endl;
         bool validMove = true;
-        int placement = -1;
+        int placement;// = -1;
 
         do {
 
-            placement = -1;
+           // placement = -1;
             std::cout << "Enter your position: ";
             std::cin >> placement;
 
@@ -73,9 +73,9 @@ int main()
         } while (!validMove);
         
         gameBoard.makeMove(placement, gameBoard.getCurrentPlayer());
-        gameBoard.displayBoard();
+        gameBoard.startNewGame();
 
-
+        count++;
         BOARD_SQUARE_STATE winner = gameBoard.checkWin();
 
         if (winner == BOARD_SQUARE_STATE::RED)
@@ -83,12 +83,12 @@ int main()
             gameOver = true;
             std::cout << "RED WINS!" << std::endl;
         }
-        else if (winner == BOARD_SQUARE_STATE::YELLOW)
+        else if (winner == BOARD_SQUARE_STATE::BLUE)
         {
             gameOver = true;
-            std::cout << "YELLOW WINS!" << std::endl;
+            std::cout << "BLUE WINS!" << std::endl;
         }
-        count++;
+       
 
     } while (!gameOver);
 

@@ -10,7 +10,7 @@ Board::~Board()
 
 void Board::startGame() 
 {
-    currentPlayer = 1;
+   // currentPlayer = 1;
 
     for (int i = 0; i < boardY + 1; i++)
     {
@@ -18,6 +18,29 @@ void Board::startGame()
         {
             board[i][j] = NONE; //setting up a blank 7x6 board
         }
+    }
+}
+
+void Board::startNewGame()
+{
+    for (int x = 0; x < 6; x++)
+    {
+        for (int y = 0; y < 7; y++)
+        {
+            switch (board[x][y])
+            {
+            case(BOARD_SQUARE_STATE::NONE):
+                std::cout << BGcol << "0";
+                    break;
+            case(BOARD_SQUARE_STATE::RED):
+                std::cout << redCol << "1";
+                    break;
+            case(BOARD_SQUARE_STATE::BLUE):
+                std::cout << blueCol << "2";
+                    break;
+            }
+        }
+        std::cout << resetcol << std::endl;
     }
 }
 
@@ -35,8 +58,8 @@ void Board::displayBoard()
             case BOARD_SQUARE_STATE::RED:
                 std::cout << redCol << BGcol << "0";
                 break;
-            case BOARD_SQUARE_STATE::YELLOW:
-                std::cout << yellowCol << BGcol << "0";
+            case BOARD_SQUARE_STATE::BLUE:
+                std::cout << blueCol << BGcol << "0";
                 break;
             default:
                 break;
@@ -53,26 +76,34 @@ void Board::makeMove(int posChoice, int currentPlayer)
 {
     BOARD_SQUARE_STATE piece = BOARD_SQUARE_STATE::NONE;
 
-    if (currentPlayer == 1) { piece = BOARD_SQUARE_STATE::YELLOW; }
+    if (currentPlayer == 1) { piece = BOARD_SQUARE_STATE::BLUE; }
     else if (currentPlayer == 2) { piece = BOARD_SQUARE_STATE::RED; }   //setting players colour
 
-    for (int i = boardY; i >= 0; i--)   
+    for (int i = boardY; i > -1; i--)   
     {
         if (board[i][posChoice] == BOARD_SQUARE_STATE::NONE)
         {
             board[i][posChoice] = piece;
-            break; //so only draws 1 piece not whole row
+            return; //so only draws 1 piece not whole row
         }
     }
 }
 
-BOARD_SQUARE_STATE Board::checkWin()
+BOARD_SQUARE_STATE Board::checkWin() //break at 0 only goes to 3
 {
     for (int i = 0; i < boardY + 1; i++)
     {
         for (int j = 0; j < boardX + 1; j++)
         {
-            if (checkDown(i, j) || checkSides(i, j) || checkDiag(i, j))
+            if (checkDown(i, j))
+            {
+                return board[i][j];
+            }
+            else if (checkSides(i, j))
+            {
+                return board[i][j];
+            }
+            else if (checkDiag(i, j))
             {
                 return board[i][j];
             }
@@ -81,7 +112,6 @@ BOARD_SQUARE_STATE Board::checkWin()
 
     return BOARD_SQUARE_STATE::NONE;
 }
-
 
 
 bool Board::checkDown(int x, int y)
