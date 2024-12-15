@@ -16,17 +16,15 @@ public:
 	GameBoard board;
 	GameAction action;
 
-	int getCurrentPlayer() { return currentPlayer; };
-	void setCurrentPlayer(int chosenPlayer) { currentPlayer = chosenPlayer; };
-	BOARD_SQUARE_STATE getBoardAtPos(int x, int y) { return board.board[x][y]; };
-
 	//functions for in play
 	void displayBoard();
 	void makeMove(GameAction newAction); //move struct
-	BOARD_SQUARE_STATE checkWin();
+	BOARD_SQUARE_STATE checkWin();	//check the winner of the game after each move
 	bool checkDown(int y, int x);
 	bool checkSides(int y, int x);
 	bool checkDiag(int y, int x);
+
+	std::vector<int> getPossibleMoves(); //for ai to figure out where it can place coins 
 
 private:
 

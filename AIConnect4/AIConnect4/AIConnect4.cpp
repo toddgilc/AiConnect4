@@ -1,6 +1,9 @@
 #include <iostream>
 #include "State.h"
 #include "Board.h"
+#include "Connect4AiNode.h"
+
+const int MAX_RUNS = 5000;
 
 bool validatePosition(int placement, State gameState)
 {
@@ -11,7 +14,7 @@ bool validatePosition(int placement, State gameState)
     }
    
     //add check for full row
-    if (gameState.getBoardAtPos(placement, 0) != BOARD_SQUARE_STATE::NONE) //inverted inputs here !
+    if (gameState.board.board[placement][0] != BOARD_SQUARE_STATE::NONE) //inverted inputs here !
     {
         std::cout << "Row full: Enter a different position" << std::endl;
         return false;
@@ -22,39 +25,46 @@ bool validatePosition(int placement, State gameState)
 
 int main()
 {
-    State gameState;
-    bool gameOver = false;
     BOARD_SQUARE_STATE aiMarker = BOARD_SQUARE_STATE::BLUE;
     BOARD_SQUARE_STATE playerMarker = BOARD_SQUARE_STATE::RED;
+    Connect4AiNode* rootNode = new Connect4AiNode();
+    State gameState;
+    bool gameOver = false;
+
     std::cout << "Connect 4!" << std::endl;
 
     gameState.displayBoard();
-    int count = 0;
+
 
     do {
-
         std::cout << "Ai move...." << std::endl;
-        bool validMove = true;
-        int placement;
-        GameAction aiAction;
+
+        rootNode->setCurrentPlayer(playerMarker); // the AI will move first from empty state
+        rootNode->setGameState(gameState);
+        int runCount = 0;
 
         do {
 
-            std::cout << "Enter your position: ";
-            std::cin >> placement;
+            Connect4AiNode* selectedNode = rootNode->Select();
+            Connect4AiNode* expandedNode = selectedNode->Expand();
 
+            if (!expandedNode == NULL)
+            {
+                expandedNode->Simulate(aiMarker);
+            }
 
-            // validate the numerical input 
-            validMove = validatePosition(placement, gameState);
-        } while (!validMove);
+            runCount++;
 
-        aiAction.position = placement;
-        aiAction.playerMove = aiMarker;
+        } while (runCount < MAX_RUNS);
 
-        gameState.makeMove(aiAction);
+        Connect4AiNode* highestChild = rootNode->FindHighestRankingChild(true);
+        GameAction bestAction = highestChild->getGameState().action;
+        bestAction.playerMove = aiMarker;
+        std::cout << "The AI selected move is " << bestAction.position << std::endl;
+        gameState.makeMove(bestAction);
         gameState.displayBoard();
 
-        count++;
+
         BOARD_SQUARE_STATE winner = gameState.checkWin();
 
         if (winner == BOARD_SQUARE_STATE::RED)
@@ -69,15 +79,57 @@ int main()
             std::cout << "BLUE WINS!" << std::endl;
             break;
         }
+        if (gameState.getPossibleMoves().size() == 0)
+        {
+            gameOver = true;
+            std::cout << "DRAW" << std::endl;
+            break;
+        }
 
+        ///////////////////////////////////////////////
+        //std::cout << "Ai move...." << std::endl;
+        //bool validMove = true;
+        //int placement;
+        //GameAction aiAction;
+
+        //do {
+
+        //    std::cout << "Enter your position: ";
+        //    std::cin >> placement;
+
+
+        //    // validate the numerical input 
+        //    validMove = validatePosition(placement, gameState);
+        //} while (!validMove);
+
+        //aiAction.position = placement;
+        //aiAction.playerMove = aiMarker;
+
+        //gameState.makeMove(aiAction);
+        //gameState.displayBoard();
+
+        //BOARD_SQUARE_STATE winner = gameState.checkWin();
+
+        //if (winner == BOARD_SQUARE_STATE::RED)
+        //{
+        //    gameOver = true;
+        //    std::cout << "RED WINS!" << std::endl;
+        //    break;
+        //}
+        //else if (winner == BOARD_SQUARE_STATE::BLUE)
+        //{
+        //    gameOver = true;
+        //    std::cout << "BLUE WINS!" << std::endl;
+        //    break;
+        //}
 
 
         ///////////////////////////////////////////////////
 
       
         std::cout << "Players move...." << std::endl;
-        validMove = true;
-        placement;
+        bool validMove = true;
+        int placement;
         GameAction playerAction;
 
         do {
@@ -96,7 +148,6 @@ int main()
         gameState.makeMove(playerAction);
         gameState.displayBoard();
 
-        count++;
         winner = gameState.checkWin();
 
         if (winner == BOARD_SQUARE_STATE::RED)

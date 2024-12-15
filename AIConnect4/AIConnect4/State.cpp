@@ -173,3 +173,19 @@ bool State::checkDiag(int x, int y) //update with new method
     return diagCount >= 4;
 }
 
+
+std::vector<int>State::getPossibleMoves()
+{
+    std::vector<int> possibleMoves;
+
+        for (int i = 0; i < boardX+1; i++)
+        {
+            if (board.board[i][0] == BOARD_SQUARE_STATE::NONE)
+            {
+                // if currently empty,add to possible moves
+                possibleMoves.push_back(i);
+            }
+        }
+    
+    return possibleMoves;
+}
