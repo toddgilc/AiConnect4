@@ -22,7 +22,7 @@ public:
 
 	//functions for in play
 	void displayBoard();
-	void makeMove(int posChoice, int currentPlayer); //move struct
+	void makeMove(GameAction newAction); //move struct
 	BOARD_SQUARE_STATE checkWin();
 	bool checkDown(int y, int x);
 	bool checkSides(int y, int x);

@@ -36,18 +36,15 @@ void State::displayBoard()
     //std::cout << resetcol << "";
 }
 
-void State::makeMove(int posChoice, int currentPlayer)
+void State::makeMove(GameAction newAction)
 {
-    BOARD_SQUARE_STATE piece = BOARD_SQUARE_STATE::NONE;
-
-    if (currentPlayer == 1) { piece = BOARD_SQUARE_STATE::BLUE; }
-    else if (currentPlayer == 2) { piece = BOARD_SQUARE_STATE::RED; }   //setting players colour
+    action = newAction;
 
     for (int i = boardY; i > -1; i--)
     {
-        if (board.board[posChoice][i] == BOARD_SQUARE_STATE::NONE)    //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+        if (board.board[newAction.position][i] == BOARD_SQUARE_STATE::NONE)    //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
         {
-            board.board[posChoice][i] = piece;
+            board.board[newAction.position][i] = newAction.playerMove;
             return; //so only draws 1 piece not whole row
         }
     }
@@ -82,6 +79,8 @@ bool State::checkDown(int x, int y)
 {
     int vertCount = 1;
 
+    if (y + 4 > boardY + 1) { return false; }
+
     for (int i = 1; i <= 4; i++)
     {
         if (board.board[x][y] != NONE && board.board[x][y] == board.board[x][y + i])
@@ -97,31 +96,35 @@ bool State::checkDown(int x, int y)
 bool State::checkSides(int x, int y)
 {
     int horzCount = 1;
-    bool left = true;
-    bool right = true;
 
+    if (!(x - 4 < boardX + 1)) {
 
-    for (int i = 1; i <= 4; i++)
-    {
-        if (board.board[x][y] != NONE && board.board[x][y] == board.board[x + i][y] && right)
+        for (int i = 1; i <= 4; i++)
         {
-            horzCount++;
+            if (board.board[x][y] != NONE && board.board[x][y] == board.board[x + i][y])
+            {
+                horzCount++;
+            }
         }
-        else { right = false; }
 
-        if (board.board[x][y] != NONE && board.board[x][y] == board.board[x - i][y] && left)
-        {
-            horzCount++;
-        }
-        else { left = false; }
-
-        if (!right && !left) { break; }
     }
 
+    if (!(x + 4 > boardX + 1)) {
+
+        for (int i = 1; i <= 4; i++)
+        {
+            if (board.board[x][y] != NONE && board.board[x][y] == board.board[x + i][y])
+            {
+                horzCount++;
+            }
+        }
+
+    }
+  
     return horzCount >= 4;
 }
 
-bool State::checkDiag(int x, int y)
+bool State::checkDiag(int x, int y) //update with new method
 {
     int diagCount = 1;
     bool left = true;
