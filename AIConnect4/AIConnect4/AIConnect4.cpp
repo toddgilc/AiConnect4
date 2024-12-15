@@ -1,7 +1,8 @@
 #include <iostream>
+#include "State.h"
 #include "Board.h"
 
-bool validatePosition(int placement, Board gameBoard)
+bool validatePosition(int placement, State gameState)
 {
     if (placement < 0 || placement > 6) {
 
@@ -10,7 +11,7 @@ bool validatePosition(int placement, Board gameBoard)
     }
    
     //add check for full row
-    if (gameBoard.getBoardAtPos(placement, 0) != BOARD_SQUARE_STATE::NONE) //inverted inputs here !
+    if (gameState.getBoardAtPos(placement, 0) != BOARD_SQUARE_STATE::NONE) //inverted inputs here !
     {
         std::cout << "Row full: Enter a different position" << std::endl;
         return false;
@@ -21,20 +22,18 @@ bool validatePosition(int placement, Board gameBoard)
 
 int main()
 {
-    Board gameBoard;
+    State gameState;
     bool gameOver = false;
 
-    //gameBoard.startGame();
-
-    gameBoard.displayBoard();
+    gameState.displayBoard();
     int count = 0;
     do {
 
         if (count % 2 == 0)
         {
-            gameBoard.setCurrentPlayer(1);
+            gameState.setCurrentPlayer(1);
         }
-        else { gameBoard.setCurrentPlayer(2); }
+        else { gameState.setCurrentPlayer(2); }
        
         std::cout << "Players move...." << std::endl;
         bool validMove = true;
@@ -48,14 +47,14 @@ int main()
 
 
             // validate the numerical input 
-            validMove = validatePosition(placement, gameBoard);
+            validMove = validatePosition(placement, gameState);
         } while (!validMove);
         
-        gameBoard.makeMove(placement, gameBoard.getCurrentPlayer());
-        gameBoard.displayBoard();
+        gameState.makeMove(placement, gameState.getCurrentPlayer());
+        gameState.displayBoard();
 
         count++;
-        BOARD_SQUARE_STATE winner = gameBoard.checkWin();
+        BOARD_SQUARE_STATE winner = gameState.checkWin();
 
         if (winner == BOARD_SQUARE_STATE::RED)
         {
