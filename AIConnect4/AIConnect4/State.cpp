@@ -10,9 +10,14 @@ State::~State()
 
 void State::displayBoard()
 {
+    for (int y = 0; y < boardX + 1; y++)
+    {
+        std::cout << y << "     ";
+    }
+    std::cout << "" << std::endl;
     for (int y = 0; y < boardY + 1; y++)
     {
-        std::cout << y;
+      
         for (int x = 0; x < boardX + 1; x++)
         {
             switch (board.board[x][y])
@@ -32,7 +37,6 @@ void State::displayBoard()
             std::cout << underlinecol << "     ";
         }
         std::cout << resetcol << "" << std::endl;
-
     }
     //std::cout << resetcol << "";
 }
