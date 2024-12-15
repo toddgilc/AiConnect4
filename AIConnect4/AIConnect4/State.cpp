@@ -12,6 +12,7 @@ void State::displayBoard()
 {
     for (int y = 0; y < boardY + 1; y++)
     {
+        std::cout << y;
         for (int x = 0; x < boardX + 1; x++)
         {
             switch (board.board[x][y])
@@ -182,7 +183,6 @@ std::vector<int>State::getPossibleMoves()
         {
             if (board.board[i][0] == BOARD_SQUARE_STATE::NONE)
             {
-                // if currently empty,add to possible moves
                 possibleMoves.push_back(i);
             }
         }

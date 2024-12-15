@@ -1,7 +1,5 @@
 #pragma once
 #include <vector>
-//#include <stack>
-#include <random>
 #include "Board.h"
 #include "State.h"
 
@@ -45,8 +43,6 @@ private:
 	std::vector<int> availableMoves;
 	BOARD_SQUARE_STATE activePlayer;
 	int visits = 0;
-
-	std::random_device rd;
 
 	void generatePossibleMoves();
 };

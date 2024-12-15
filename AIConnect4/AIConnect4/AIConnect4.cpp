@@ -86,46 +86,7 @@ int main()
             break;
         }
 
-        ///////////////////////////////////////////////
-        //std::cout << "Ai move...." << std::endl;
-        //bool validMove = true;
-        //int placement;
-        //GameAction aiAction;
-
-        //do {
-
-        //    std::cout << "Enter your position: ";
-        //    std::cin >> placement;
-
-
-        //    // validate the numerical input 
-        //    validMove = validatePosition(placement, gameState);
-        //} while (!validMove);
-
-        //aiAction.position = placement;
-        //aiAction.playerMove = aiMarker;
-
-        //gameState.makeMove(aiAction);
-        //gameState.displayBoard();
-
-        //BOARD_SQUARE_STATE winner = gameState.checkWin();
-
-        //if (winner == BOARD_SQUARE_STATE::RED)
-        //{
-        //    gameOver = true;
-        //    std::cout << "RED WINS!" << std::endl;
-        //    break;
-        //}
-        //else if (winner == BOARD_SQUARE_STATE::BLUE)
-        //{
-        //    gameOver = true;
-        //    std::cout << "BLUE WINS!" << std::endl;
-        //    break;
-        //}
-
-
-        ///////////////////////////////////////////////////
-
+        //////////////////////////////////////////////////////////////////////////////////////
       
         std::cout << "Players move...." << std::endl;
         bool validMove = true;
@@ -163,6 +124,8 @@ int main()
             break;
         }
        
+
+        rootNode->resetNode();
 
     } while (!gameOver);
 

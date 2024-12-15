@@ -64,14 +64,9 @@ Connect4AiNode* Connect4AiNode::Select()
 {
 	if (branches.size() == 0 || availableMoves.size() > 0) { return this; }
 	else {
-
-
-		std::mt19937 gen(rd());
-		std::uniform_int_distribution<> disExplore(1, 10);
-		std::uniform_int_distribution<> disBranch(1, branches.size());
-		if (disExplore(gen) < 2)
-		{
-			int randBranch = disBranch(gen);
+		int randomNum = rand() % 10;
+		if (randomNum < 2) {
+			int randBranch = rand() % branches.size();
 			return branches[randBranch]->Select();
 		}
 		else {
