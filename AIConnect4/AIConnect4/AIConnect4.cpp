@@ -64,7 +64,6 @@ int main()
         gameState.makeMove(bestAction);
         gameState.displayBoard();
 
-
         BOARD_SQUARE_STATE winner = gameState.checkWin();
 
         if (winner == BOARD_SQUARE_STATE::RED)

@@ -118,7 +118,7 @@ bool State::checkSides(int x, int y)
 
         for (int i = 1; i <= 4; i++)
         {
-            if (board.board[x][y] != NONE && board.board[x][y] == board.board[x + i][y])
+            if (board.board[x][y] != NONE && board.board[x][y] == board.board[x - i][y])
             {
                 horzCount++;
             }
@@ -128,6 +128,34 @@ bool State::checkSides(int x, int y)
   
     return horzCount >= 4;
 }
+//
+//bool State::checkSides(int y, int x)
+//{
+//    int horzCount = 1;
+//    bool left = true;
+//    bool right = true;
+//
+//
+//    for (int i = 1; i <= 4; i++)
+//    {
+//        if (board.board[x][y] != NONE && board.board[x][y] == board.board[x + i][y] && right)
+//        {
+//            horzCount++;
+//        }
+//        else { right = false; }
+//
+//        if (board.board[x][y] != NONE && board.board[x][y] == board.board[x - i][y] && left)
+//        {
+//            horzCount++;
+//        }
+//        else { left = false; }
+//
+//        if (!right && !left) { break; }
+//    }
+//
+//    return horzCount >= 4;
+//}
+
 
 bool State::checkDiag(int x, int y) //update with new method
 {

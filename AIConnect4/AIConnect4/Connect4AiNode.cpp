@@ -20,6 +20,7 @@ BOARD_SQUARE_STATE Connect4AiNode::getOppositeMove(BOARD_SQUARE_STATE state)
 
 Connect4AiNode::Connect4AiNode()
 {
+	srand(time(0));
 	isEndState = false;
 	parent = nullptr;
 	ranking = 0;
