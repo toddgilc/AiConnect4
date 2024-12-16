@@ -234,16 +234,11 @@ Connect4AiNode* Connect4AiNode::FindHighestRankingChild(bool report) //seen mult
 		UCBVal = (nodeWins/nodeVisits) + explorationParameter * sqrt((log(nodeParentVisits) / nodeVisits));
 		
 
-		if (UCBVal > maxRanking) //replacingh previous if winrate / rankng set new 
+		if (UCBVal > maxRanking) 
 		{
 			maxIndex = i;
 			maxRanking = UCBVal;
 		}
-		//if (nodeWinRate > maxRanking) //replacingh previous if winrate / rankng set new 
-		//{
-		//	maxIndex = i;
-		//	maxRanking = branches[i]->getRanking();
-		//}
 	}
 
 	return branches[maxIndex];
