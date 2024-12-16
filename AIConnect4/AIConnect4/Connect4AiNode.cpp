@@ -67,9 +67,9 @@ Connect4AiNode* Connect4AiNode::Select()
 	if (branches.size() == 0 || availableMoves.size() > 0) { return this; }
 	else {
 		int randomNum = rand() % 10;
-		if (randomNum < 2) {
-			int randBranch = rand() % branches.size();
-			return branches[randBranch]->Select();
+		if (randomNum == 1) {
+			int randomBranch = rand() % branches.size();
+			return branches[randomBranch]->Select();	
 		}
 		else {
 			Connect4AiNode* highest = FindHighestRankingChild(false);
@@ -216,15 +216,10 @@ Connect4AiNode* Connect4AiNode::FindHighestRankingChild(bool report) //seen mult
 		return NULL;
 	}
 
-	//if ()
-	//{
-
-	//}
-
+	State state;
 	float nodeVisits;
 	float nodeWins;
 	float explorationParameter = 1.1;
-	float newExplorationParameter;
 	float nodeParentVisits = visits;
 	float UCBVal;
 
@@ -238,12 +233,27 @@ Connect4AiNode* Connect4AiNode::FindHighestRankingChild(bool report) //seen mult
 		nodeWins = branches[i]->getRanking();
 		
 		UCBVal = (nodeWins/nodeVisits) + explorationParameter * sqrt((log(nodeParentVisits) / nodeVisits));
-		
 
 		if (UCBVal > maxRanking) 
 		{
-			maxIndex = i;
-			maxRanking = UCBVal;
+			state = getGameState();
+			state.makeMove(branches[i]->worldState.action);
+			std::vector<int> possibleOppMoves = state.getPossibleMoves();
+			bool setNewBranchAllowed = true;
+
+			for (int j = 0; j < possibleOppMoves.size(); j++)
+			{
+				GameAction newAction(possibleOppMoves[j], RED);
+				//state.makeMove(newAction);
+				if (state.checkWin() == RED)
+				{
+					setNewBranchAllowed = false;
+				}
+			}
+			if (setNewBranchAllowed) {
+				maxIndex = i;
+				maxRanking = UCBVal;
+			}
 		}
 	}
 

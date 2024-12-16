@@ -45,11 +45,11 @@ void State::makeMove(GameAction newAction)
 {
     action = newAction;
 
-    for (int i = boardY; i > -1; i--)
+    for (int i = boardY; i >= 0; i--)
     {
-        if (board.board[newAction.position][i] == BOARD_SQUARE_STATE::NONE)    //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+        if (board.board[action.position][i] == BOARD_SQUARE_STATE::NONE)    //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
         {
-            board.board[newAction.position][i] = newAction.playerMove;
+            board.board[action.position][i] = action.playerMove;
             return; //so only draws 1 piece not whole row
         }
     }
@@ -65,17 +65,14 @@ BOARD_SQUARE_STATE State::checkWin() //break at 0 only goes to 3
            
                 if (checkDown(i, j))
                 {
-                    std::cout << "UP/DOWN ";
                     return board.board[i][j];
                 }
                 else if (checkSides(i, j))
                 {
-                    std::cout << "LEFT/RIGHT ";
                     return board.board[i][j];
                 }
                 else if (checkDiag(i, j))
                 {
-                    std::cout << "DIAGONAL ";
                     return board.board[i][j];
                 }
             }
@@ -138,13 +135,13 @@ bool State::checkDiag(int x, int y)
 
     for (int i = 1; i <= 4; i++)
     {
-        if (right && board.board[x][y] == board.board[x + i][y + i])
+        if (board.board[x][y] == board.board[x + i][y + i] && right)
         {
             diagCount++;
         }
         else { right = false; }
 
-        if (left && board.board[x][y] == board.board[x - i][y - i])
+        if (board.board[x][y] == board.board[x - i][y - i] && left)
         {
             diagCount++;
         }
@@ -161,13 +158,13 @@ bool State::checkDiag(int x, int y)
 
     for (int i = 1; i <= 4; i++)
     {
-        if (right && board.board[x][y] == board.board[x + i][y - i])
+        if (board.board[x][y] == board.board[x + i][y - i] && right)
         {
             diagCount++;
         }
         else { right = false; }
 
-        if (left && board.board[x][y] == board.board[x - i][y + i])
+        if (board.board[x][y] == board.board[x - i][y + i] && left)
         {
             diagCount++;
         }
