@@ -14,7 +14,9 @@ BOARD_SQUARE_STATE Connect4AiNode::getOppositeMove(BOARD_SQUARE_STATE state)
 		return BOARD_SQUARE_STATE::RED;
 	}
 	else
+	{
 		return BOARD_SQUARE_STATE::NONE;
+	}
 }
 
 
@@ -58,7 +60,6 @@ void Connect4AiNode::generatePossibleMoves()
 		isEndState = true;
 	}
 }
-
 
 
 Connect4AiNode* Connect4AiNode::Select()
@@ -215,9 +216,14 @@ Connect4AiNode* Connect4AiNode::FindHighestRankingChild(bool report) //seen mult
 		return NULL;
 	}
 
+	//if ()
+	//{
+
+	//}
+
 	float nodeVisits;
 	float nodeWins;
-	float explorationParameter = 0.1;
+	float explorationParameter = 1.1;
 	float newExplorationParameter;
 	float nodeParentVisits = visits;
 	float UCBVal;

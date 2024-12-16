@@ -61,17 +61,23 @@ BOARD_SQUARE_STATE State::checkWin() //break at 0 only goes to 3
     {
         for (int j = 0; j < boardX + 1; j++)
         {
-            if (checkDown(i, j))
-            {
-                return board.board[i][j];
-            }
-            else if (checkSides(i, j))
-            {
-                return board.board[i][j];
-            }
-            else if (checkDiag(i, j))
-            {
-                return board.board[i][j];
+            if (board.board[i][j] != NONE) {
+           
+                if (checkDown(i, j))
+                {
+                    std::cout << "UP/DOWN ";
+                    return board.board[i][j];
+                }
+                else if (checkSides(i, j))
+                {
+                    std::cout << "LEFT/RIGHT ";
+                    return board.board[i][j];
+                }
+                else if (checkDiag(i, j))
+                {
+                    std::cout << "DIAGONAL ";
+                    return board.board[i][j];
+                }
             }
         }
     }
@@ -82,10 +88,6 @@ BOARD_SQUARE_STATE State::checkWin() //break at 0 only goes to 3
 
 bool State::checkDown(int x, int y)
 {
-    if (board.board[x][y] == NONE) {
-        return false;
-    }
-
     int vertCount = 1;
 
     if (y + 4 > boardY + 1) { return false; }
@@ -104,10 +106,6 @@ bool State::checkDown(int x, int y)
 
 bool State::checkSides(int x, int y)
 {
-    if (board.board[x][y] == NONE) {
-        return false;
-    }
-
     int horzCount = 1;
 
     for (int i = 1; i <= 4; i++)
@@ -132,34 +130,30 @@ bool State::checkSides(int x, int y)
     return horzCount >= 4;
 }
 
-bool State::checkDiag(int x, int y) //update with new method
+bool State::checkDiag(int x, int y)
 {
-    if (board.board[x][y] == NONE) {
-        return false;
-    }
-
     int diagCount = 1;
     bool left = true;
     bool right = true;
 
     for (int i = 1; i <= 4; i++)
     {
-        if (board.board[x][y] == board.board[x + i][y + i] && right)
+        if (right && board.board[x][y] == board.board[x + i][y + i])
         {
             diagCount++;
         }
         else { right = false; }
 
-        if (board.board[x][y] == board.board[x - i][y - i] && left)
+        if (left && board.board[x][y] == board.board[x - i][y - i])
         {
             diagCount++;
         }
         else { left = false; }
 
+        if (diagCount >= 4) { return true; } 
+
         if (!right && !left) { break; }
     }
-
-    if (diagCount >= 4) { return true; }
 
     diagCount = 1;
     left = true;
@@ -167,23 +161,26 @@ bool State::checkDiag(int x, int y) //update with new method
 
     for (int i = 1; i <= 4; i++)
     {
-        if (board.board[x][y] == board.board[x + i][y - i] && right)
+        if (right && board.board[x][y] == board.board[x + i][y - i])
         {
             diagCount++;
         }
         else { right = false; }
 
-        if (board.board[x][y] == board.board[x - i][y + i] && left)
+        if (left && board.board[x][y] == board.board[x - i][y + i])
         {
             diagCount++;
         }
         else { left = false; }
 
+        if (diagCount >= 4) { return true; } 
+
         if (!right && !left) { break; }
     }
 
-    return diagCount >= 4;
+    return false; 
 }
+
 
 
 std::vector<int>State::getPossibleMoves()
