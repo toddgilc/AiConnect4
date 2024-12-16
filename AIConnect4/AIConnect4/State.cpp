@@ -130,53 +130,22 @@ bool State::checkSides(int x, int y)
 
 bool State::checkDiag(int x, int y)
 {
-    int diagCount = 1;
-    bool left = true;
-    bool right = true;
-
-    for (int i = 1; i <= 4; i++)
+    if (
+        board.board[x][y] == board.board[x+1][y + 1] &&
+        board.board[x][y] == board.board[x+2][y + 2] &&
+        board.board[x][y] == board.board[x+3][y + 3])
     {
-        if (board.board[x][y] == board.board[x + i][y + i] && right)
-        {
-            diagCount++;
-        }
-        else { right = false; }
-
-        if (board.board[x][y] == board.board[x - i][y - i] && left)
-        {
-            diagCount++;
-        }
-        else { left = false; }
-
-        if (diagCount >= 4) { return true; } 
-
-        if (!right && !left) { break; }
+        return board.board[x][y];
     }
 
-    diagCount = 1;
-    left = true;
-    right = true;
-
-    for (int i = 1; i <= 4; i++)
+    if (
+        board.board[x][y] == board.board[x + 1][y - 1] &&
+        board.board[x][y] == board.board[x + 2][y - 2] &&
+        board.board[x][y] == board.board[x + 3][y - 3])
     {
-        if (board.board[x][y] == board.board[x + i][y - i] && right)
-        {
-            diagCount++;
-        }
-        else { right = false; }
-
-        if (board.board[x][y] == board.board[x - i][y + i] && left)
-        {
-            diagCount++;
-        }
-        else { left = false; }
-
-        if (diagCount >= 4) { return true; } 
-
-        if (!right && !left) { break; }
+        return board.board[x][y];
     }
-
-    return false; 
+    return false;
 }
 
 

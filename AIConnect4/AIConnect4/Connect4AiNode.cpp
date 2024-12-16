@@ -247,15 +247,12 @@ Connect4AiNode* Connect4AiNode::FindHighestRankingChild(bool report) //seen mult
 			}
 		}
 
-
 		UCBVal = (nodeWins/nodeVisits) + explorationParameter * sqrt((log(nodeParentVisits) / nodeVisits));
 
 		if (UCBVal > maxRanking) 
 		{
-			
 			std::vector<int> possibleOppMoves = state.getPossibleMoves();
 			bool setNewMoveAllowed = true;
-
 			for (int j = 0; j < possibleOppMoves.size(); j++)
 			{
 				GameAction newAction(possibleOppMoves[j], RED);
