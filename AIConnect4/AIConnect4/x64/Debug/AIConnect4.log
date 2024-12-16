@@ -1,2 +1,7 @@
-﻿  State.cpp
+﻿  Connect4AiNode.cpp
+C:\Users\toddg\source\repos\AiConnect4\AIConnect4\AIConnect4\Connect4AiNode.cpp(25,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\toddg\source\repos\AiConnect4\AIConnect4\AIConnect4\Connect4AiNode.cpp(222,29): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\toddg\source\repos\AiConnect4\AIConnect4\AIConnect4\Connect4AiNode.cpp(223,25): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\toddg\source\repos\AiConnect4\AIConnect4\AIConnect4\Connect4AiNode.cpp(232,38): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\toddg\source\repos\AiConnect4\AIConnect4\AIConnect4\Connect4AiNode.cpp(233,37): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   AIConnect4.vcxproj -> C:\Users\toddg\source\repos\AiConnect4\AIConnect4\x64\Debug\AIConnect4.exe

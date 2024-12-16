@@ -239,18 +239,18 @@ Connect4AiNode* Connect4AiNode::FindHighestRankingChild(bool report) //seen mult
 			state = getGameState();
 			state.makeMove(branches[i]->worldState.action);
 			std::vector<int> possibleOppMoves = state.getPossibleMoves();
-			bool setNewBranchAllowed = true;
+			bool setNewMoveAllowed = true;
 
 			for (int j = 0; j < possibleOppMoves.size(); j++)
 			{
 				GameAction newAction(possibleOppMoves[j], RED);
-				//state.makeMove(newAction);
+				state.makeMove(newAction);
 				if (state.checkWin() == RED)
 				{
-					setNewBranchAllowed = false;
+					setNewMoveAllowed = false;
 				}
 			}
-			if (setNewBranchAllowed) {
+			if (setNewMoveAllowed) {
 				maxIndex = i;
 				maxRanking = UCBVal;
 			}
