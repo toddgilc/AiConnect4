@@ -226,18 +226,33 @@ Connect4AiNode* Connect4AiNode::FindHighestRankingChild(bool report) //seen mult
 	float maxRanking = 0;
 	int maxIndex = 0;
 
+	bool canAIWinNextMove;
+
 	for (int i = 0; i < branches.size(); i++)
 	{
 		//float nodeWinRate = branches[i]->getRanking() / branches[i]->visits;
 		nodeVisits = branches[i]->getVisits();
 		nodeWins = branches[i]->getRanking();
 		
+		state = getGameState();
+		state.makeMove(branches[i]->worldState.action);
+		std::vector<int> possibleAIMoves = state.getPossibleMoves();
+		
+		for (int j = 0; j < possibleAIMoves.size(); j++)
+		{
+			GameAction newAction(possibleAIMoves[j], BLUE);
+			if (state.checkWin() == BLUE)
+			{
+				return branches[i];
+			}
+		}
+
+
 		UCBVal = (nodeWins/nodeVisits) + explorationParameter * sqrt((log(nodeParentVisits) / nodeVisits));
 
 		if (UCBVal > maxRanking) 
 		{
-			state = getGameState();
-			state.makeMove(branches[i]->worldState.action);
+			
 			std::vector<int> possibleOppMoves = state.getPossibleMoves();
 			bool setNewMoveAllowed = true;
 
@@ -250,6 +265,7 @@ Connect4AiNode* Connect4AiNode::FindHighestRankingChild(bool report) //seen mult
 					setNewMoveAllowed = false;
 				}
 			}
+
 			if (setNewMoveAllowed) {
 				maxIndex = i;
 				maxRanking = UCBVal;
