@@ -208,25 +208,42 @@ void Connect4AiNode::Backpropagate(int result)
 }
 
 
-Connect4AiNode* Connect4AiNode::FindHighestRankingChild(bool report)
+Connect4AiNode* Connect4AiNode::FindHighestRankingChild(bool report) //seen multiple versions of the UCB formula so using the one from week 6 ppt
 {
 	if (branches.size() == 0)
 	{
 		return NULL;
 	}
 
+	float nodeVisits;
+	float nodeWins;
+	float explorationParameter = 0.1;
+	float newExplorationParameter;
+	float nodeParentVisits = visits;
+	float UCBVal;
+
 	float maxRanking = 0;
 	int maxIndex = 0;
 
 	for (int i = 0; i < branches.size(); i++)
 	{
-		float nodeWinRate = branches[i]->getRanking() / branches[i]->visits;
+		//float nodeWinRate = branches[i]->getRanking() / branches[i]->visits;
+		nodeVisits = branches[i]->getVisits();
+		nodeWins = branches[i]->getRanking();
+		
+		UCBVal = (nodeWins/nodeVisits) + explorationParameter * sqrt((log(nodeParentVisits) / nodeVisits));
+		
 
-		if (nodeWinRate > maxRanking)
+		if (UCBVal > maxRanking) //replacingh previous if winrate / rankng set new 
 		{
 			maxIndex = i;
-			maxRanking = branches[i]->getRanking();
+			maxRanking = UCBVal;
 		}
+		//if (nodeWinRate > maxRanking) //replacingh previous if winrate / rankng set new 
+		//{
+		//	maxIndex = i;
+		//	maxRanking = branches[i]->getRanking();
+		//}
 	}
 
 	return branches[maxIndex];

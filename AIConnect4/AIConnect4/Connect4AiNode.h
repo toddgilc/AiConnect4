@@ -15,7 +15,7 @@ public:
 	bool getIsEndState() { return isEndState; }
 	std::vector<Connect4AiNode*> getBranches() { return branches; }
 	int getRanking() { return ranking; }
-
+	int getVisits() { return visits; }
 
 	BOARD_SQUARE_STATE getCurrentPlayer() { return activePlayer; };
 	void setCurrentPlayer(BOARD_SQUARE_STATE actingPlayer) { activePlayer = actingPlayer; };
@@ -36,13 +36,13 @@ public:
 
 private:
 	int ranking;
+	int visits = 0;
 	std::vector<Connect4AiNode*> branches;
 	Connect4AiNode* parent;
 	State worldState;
 	bool isEndState;
 	std::vector<int> availableMoves;
 	BOARD_SQUARE_STATE activePlayer;
-	int visits = 0;
 
 	void generatePossibleMoves();
 };
