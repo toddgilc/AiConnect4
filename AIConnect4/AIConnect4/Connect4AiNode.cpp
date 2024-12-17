@@ -152,11 +152,45 @@ void Connect4AiNode::Simulate(BOARD_SQUARE_STATE startingTurn)
 		}
 		else
 		{
+			int chosenMove = 0;
+			float weightTotal = 0;
+			float weightFinal = 0;
+			std::vector<float> weights = { 1,1,1,1,1,1,1 };
+
+			for (int i = 0; i < possibleMoves.size(); i++)
+			{
+				if (i == 3)
+				{
+					weights[i] += 200;
+				}
+				if (i == 2 || i == 4)
+				{
+					weights[i] += 6;
+				}
+			}
+
+			weightTotal = weights[0] + weights[1] + weights[2] + weights[3] + weights[4] + weights[5] + weights[6];
+
+			for (float& i : weights)
+			{
+				i /= weightTotal;
+			}
+
+			float randomMove = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+
+			for (int i = 0; i < possibleMoves.size(); i++)
+			{
+				weightFinal += weights[i];
+
+				if (randomMove <= weightFinal) {
+					chosenMove = i;
+					break;
+				}
+			}
 
 
-			// pick a random move and apply it to the simulation state
-			int randomMove = rand() % possibleMoves.size();
-			GameAction newAction(possibleMoves[randomMove], playerTurn);
+
+			GameAction newAction(chosenMove, playerTurn);
 			copyOfGameState.makeMove(newAction);
 			possibleMoves.clear();
 		}
