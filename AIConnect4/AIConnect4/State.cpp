@@ -63,17 +63,11 @@ BOARD_SQUARE_STATE State::checkWin() //break at 0 only goes to 3
         {
             if (board.board[i][j] != NONE) {
            
-                if (checkDown(i, j))
+                if (checkDown(i, j) || checkSides(i, j) || checkDiag(i, j))
                 {
-                    return board.board[i][j];
-                }
-                else if (checkSides(i, j))
-                {
-                    return board.board[i][j];
-                }
-                else if (checkDiag(i, j))
-                {
-                    std::cout << " DIAGWIN";
+                    if (checkDiag(i, j)) {
+                        std::cout << " DIAGWIN";
+                    }
                     return board.board[i][j];
                 }
             }
@@ -130,22 +124,51 @@ bool State::checkSides(int x, int y)
 
 bool State::checkDiag(int x, int y)
 {
-    if (
-        board.board[x][y] == board.board[x+1][y + 1] &&
-        board.board[x][y] == board.board[x+2][y + 2] &&
-        board.board[x][y] == board.board[x+3][y + 3])
+    int diagCount = 1;
+    bool left = true;
+    bool right = true;
+
+    for (int i = 1; i <= 4; i++)
     {
-        return board.board[x][y];
+        if (board.board[x][y] == board.board[x + i][y + i] && right)
+        {
+            diagCount++;
+        }
+        else { right = false; }
+
+        if (board.board[x][y] == board.board[x - i][y - i] && left)
+        {
+            diagCount++;
+        }
+        else { left = false; }
+
+        if (!right && !left) { break; }
     }
 
-    if (
-        board.board[x][y] == board.board[x + 1][y - 1] &&
-        board.board[x][y] == board.board[x + 2][y - 2] &&
-        board.board[x][y] == board.board[x + 3][y - 3])
+    if (diagCount >= 4) { return true; }
+
+    diagCount = 1;
+    left = true;
+    right = true;
+
+    for (int i = 1; i <= 4; i++)
     {
-        return board.board[x][y];
+        if (board.board[x][y] == board.board[x + i][y - i] && right)
+        {
+            diagCount++;
+        }
+        else { right = false; }
+
+        if (board.board[x][y] == board.board[x - i][y + i] && left)
+        {
+            diagCount++;
+        }
+        else { left = false; }
+
+        if (!right && !left) { break; }
     }
-    return false;
+
+    return diagCount >= 4;
 }
 
 
