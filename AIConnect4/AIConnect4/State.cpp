@@ -63,7 +63,7 @@ BOARD_SQUARE_STATE State::checkWin() //break at 0 only goes to 3
         {
             if (board.board[i][j] != NONE) {
            
-                if (checkDown(i, j) || checkSides(i, j) || checkDiag(i, j))
+                if (/*checkDown(i, j) || checkSides(i, j) ||*/ checkDiag(i, j))
                 {
                     if (checkDiag(i, j)) {
                         std::cout << " DIAGWIN";
@@ -125,48 +125,30 @@ bool State::checkSides(int x, int y)
 
 bool State::checkDiag(int x, int y)
 {
-    int startX = x;
-    int startY = y;
-    bool check = false;
+    int diagonalUpRightCount = 1;  
+    int diagonalDownRightCount = 1; 
 
- 
-    auto type = board.board[startX][startY];
-
-    bool winner = true;
-
-    if (x > 4 || y > 3) {
-        winner = false;
-    }
-
-    //check top diag
-    for (int i = 1; i <= 3; i++)
-    {
-        if (board.board[startX + i][startX + i] != type)
-        {
-            winner = false;
-            break;
+    for (int i = 1; i <= 3; i++) {
+       
+        if (x + i < boardX + 1 && y - i >= 0 && board.board[x][y] == board.board[x + i][y - i]) {
+            diagonalUpRightCount++;
+        }
+        else {
+            break; 
         }
     }
 
-    //reset winner between checks
-    winner = true;
-    check = false;
-
-    if (x > 4 || y < 3 || y >> 6) {
-        winner = false;
-    }
-
-    //check bottom diag
-    for (int i = 1; i <= 3; i++)
-    {
-        if (board.board[startX + i][startY - i] != type)
-        {
-            winner = false;
-            break;
+    for (int j = 1; j <= 3; j++) {
+      
+        if (x + j < boardX + 1 && y + j < boardY + 1 && board.board[x][y] == board.board[x + j][y + j]) {
+            diagonalDownRightCount++;
+        }
+        else {
+            break;  
         }
     }
 
-    return winner;
+    return (diagonalUpRightCount >= 4 || diagonalDownRightCount >= 4);
 }
 
 

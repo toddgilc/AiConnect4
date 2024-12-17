@@ -37,53 +37,53 @@ int main()
 
 
     do {
-        std::cout << "Ai move...." << std::endl;
+        //std::cout << "Ai move...." << std::endl;
 
-        rootNode->setCurrentPlayer(playerMarker); // the AI will move first from empty state
-        rootNode->setGameState(gameState);
-        int runCount = 0;
+        //rootNode->setCurrentPlayer(playerMarker); // the AI will move first from empty state
+        //rootNode->setGameState(gameState);
+        //int runCount = 0;
 
-        do {
+        //do {
 
-            Connect4AiNode* selectedNode = rootNode->Select();
-            Connect4AiNode* expandedNode = selectedNode->Expand();
+        //    Connect4AiNode* selectedNode = rootNode->Select();
+        //    Connect4AiNode* expandedNode = selectedNode->Expand();
 
-            if (!expandedNode == NULL)
-            {
-                expandedNode->Simulate(aiMarker);
-            }
+        //    if (!expandedNode == NULL)
+        //    {
+        //        expandedNode->Simulate(aiMarker);
+        //    }
 
-            runCount++;
+        //    runCount++;
 
-        } while (runCount < MAX_RUNS);
+        //} while (runCount < MAX_RUNS);
 
-        Connect4AiNode* highestChild = rootNode->FindHighestRankingChild(true);
-        GameAction bestAction = highestChild->getGameState().action;
-        bestAction.playerMove = aiMarker;
-        std::cout << "The AI selected move is " << bestAction.position << std::endl;
-        gameState.makeMove(bestAction);
-        gameState.displayBoard();
+        //Connect4AiNode* highestChild = rootNode->FindHighestRankingChild(true);
+        //GameAction bestAction = highestChild->getGameState().action;
+        //bestAction.playerMove = aiMarker;
+        //std::cout << "The AI selected move is " << bestAction.position << std::endl;
+        //gameState.makeMove(bestAction);
+        //gameState.displayBoard();
 
         BOARD_SQUARE_STATE winner = gameState.checkWin();
 
-        if (winner == BOARD_SQUARE_STATE::RED)
-        {
-            gameOver = true;
-            std::cout << "RED WINS!" << std::endl;
-            break;
-        }
-        else if (winner == BOARD_SQUARE_STATE::BLUE)
-        {
-            gameOver = true;
-            std::cout << "BLUE WINS!" << std::endl;
-            break;
-        }
-        if (gameState.getPossibleMoves().size() == 0)
-        {
-            gameOver = true;
-            std::cout << "DRAW" << std::endl;
-            break;
-        }
+        //if (winner == BOARD_SQUARE_STATE::RED)
+        //{
+        //    gameOver = true;
+        //    std::cout << "RED WINS!" << std::endl;
+        //    break;
+        //}
+        //else if (winner == BOARD_SQUARE_STATE::BLUE)
+        //{
+        //    gameOver = true;
+        //    std::cout << "BLUE WINS!" << std::endl;
+        //    break;
+        //}
+        //if (gameState.getPossibleMoves().size() == 0)
+        //{
+        //    gameOver = true;
+        //    std::cout << "DRAW" << std::endl;
+        //    break;
+        //}
 
         //////////////////////////////////////////////////////////////////////////////////////
       
