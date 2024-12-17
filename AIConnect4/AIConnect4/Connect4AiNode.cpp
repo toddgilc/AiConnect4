@@ -62,18 +62,18 @@ void Connect4AiNode::generatePossibleMoves()
 }
 
 
-Connect4AiNode* Connect4AiNode::Select()
+Connect4AiNode* Connect4AiNode::Select(float explorationVal)
 {
 	if (branches.size() == 0 || availableMoves.size() > 0) { return this; }
 	else {
 		int randomNum = rand() % 10;
 		if (randomNum == 1) {
 			int randomBranch = rand() % branches.size();
-			return branches[randomBranch]->Select();	
+			return branches[randomBranch]->Select(explorationVal);
 		}
 		else {
-			Connect4AiNode* highest = FindHighestRankingChild(false);
-			return highest->Select();
+			Connect4AiNode* highest = FindHighestRankingChild(explorationVal);
+			return highest->Select(explorationVal);
 		}
 	}
 }
@@ -152,6 +152,8 @@ void Connect4AiNode::Simulate(BOARD_SQUARE_STATE startingTurn)
 		}
 		else
 		{
+
+
 			// pick a random move and apply it to the simulation state
 			int randomMove = rand() % possibleMoves.size();
 			GameAction newAction(possibleMoves[randomMove], playerTurn);
@@ -209,7 +211,7 @@ void Connect4AiNode::Backpropagate(int result)
 }
 
 
-Connect4AiNode* Connect4AiNode::FindHighestRankingChild(bool report) //seen multiple versions of the UCB formula so using the one from week 6 ppt
+Connect4AiNode* Connect4AiNode::FindHighestRankingChild(float explorationVal) //seen multiple versions of the UCB formula so using the one from week 6 ppt
 {
 	if (branches.size() == 0)
 	{

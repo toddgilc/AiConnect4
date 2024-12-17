@@ -24,12 +24,12 @@ public:
 
 	BOARD_SQUARE_STATE getOppositeMove(BOARD_SQUARE_STATE state);
 
-	Connect4AiNode* Select();
+	Connect4AiNode* Select(float explorationVal);
 	Connect4AiNode* Expand();
 	void Simulate(BOARD_SQUARE_STATE playerTurn);
 	void Backpropagate(int reward);
 
-	Connect4AiNode* FindHighestRankingChild(bool report);
+	Connect4AiNode* FindHighestRankingChild(float explorationVal);
 	void resetNode();
 	void CalcResult(BOARD_SQUARE_STATE winner);
 
