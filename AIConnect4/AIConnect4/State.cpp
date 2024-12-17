@@ -122,53 +122,51 @@ bool State::checkSides(int x, int y)
     return horzCount >= 4;
 }
 
+
 bool State::checkDiag(int x, int y)
 {
-    int diagCount = 1;
-    bool left = true;
-    bool right = true;
+    int startX = x;
+    int startY = y;
+    bool check = false;
 
-    for (int i = 1; i <= 4; i++)
-    {
-        if (board.board[x][y] == board.board[x + i][y + i] && right)
-        {
-            diagCount++;
-        }
-        else { right = false; }
+ 
+    auto type = board.board[startX][startY];
 
-        if (board.board[x][y] == board.board[x - i][y - i] && left)
-        {
-            diagCount++;
-        }
-        else { left = false; }
+    bool winner = true;
 
-        if (!right && !left) { break; }
+    if (x > 4 || y > 3) {
+        winner = false;
     }
 
-    if (diagCount >= 4) { return true; }
-
-    diagCount = 1;
-    left = true;
-    right = true;
-
-    for (int i = 1; i <= 4; i++)
+    //check top diag
+    for (int i = 1; i <= 3; i++)
     {
-        if (board.board[x][y] == board.board[x + i][y - i] && right)
+        if (board.board[startX + i][startX + i] != type)
         {
-            diagCount++;
+            winner = false;
+            break;
         }
-        else { right = false; }
-
-        if (board.board[x][y] == board.board[x - i][y + i] && left)
-        {
-            diagCount++;
-        }
-        else { left = false; }
-
-        if (!right && !left) { break; }
     }
 
-    return diagCount >= 4;
+    //reset winner between checks
+    winner = true;
+    check = false;
+
+    if (x > 4 || y < 3 || y >> 6) {
+        winner = false;
+    }
+
+    //check bottom diag
+    for (int i = 1; i <= 3; i++)
+    {
+        if (board.board[startX + i][startY - i] != type)
+        {
+            winner = false;
+            break;
+        }
+    }
+
+    return winner;
 }
 
 
