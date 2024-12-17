@@ -65,9 +65,6 @@ BOARD_SQUARE_STATE State::checkWin() //break at 0 only goes to 3
            
                 if (checkDown(i, j) || checkSides(i, j) || checkDiag(i, j))
                 {
-                    if (checkDiag(i, j)) {
-                        std::cout << " DIAGWIN";
-                    }
                     return board.board[i][j];
                 }
             }

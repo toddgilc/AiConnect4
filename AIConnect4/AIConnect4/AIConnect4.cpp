@@ -5,6 +5,16 @@
 
 const int MAX_RUNS = 5000;
 
+bool checkFullRow(int placement, State gameState)
+{
+    if (gameState.board.board[placement][0] != BOARD_SQUARE_STATE::NONE)
+    {
+        std::cout << "Row full: Enter a different position" << std::endl;
+        return false;
+    }
+}
+
+
 bool validatePosition(int placement, State gameState)
 {
     if (placement < 0 || placement > 6) {
@@ -13,15 +23,14 @@ bool validatePosition(int placement, State gameState)
         return false;
     }
    
-    //add check for full row
-    if (gameState.board.board[placement][0] != BOARD_SQUARE_STATE::NONE) //inverted inputs here !
+    if (!checkFullRow(placement, gameState))
     {
-        std::cout << "Row full: Enter a different position" << std::endl;
         return false;
     }
 
     return true;
 }
+
 
 int main()
 {
@@ -30,12 +39,17 @@ int main()
 
     int AIGamesWon = 0;
     int randGamesWon = 0;
+    int draws = 0;
     int playChoice;
     int gamesToPlay = 1;
     float explorationVal = 1.1;
+    int maxRuns = 1000;
 
     std::cout << "Please input exploration val (mostly tested as 1.1) " << std::endl;
     std::cin >> explorationVal;
+
+    std::cout << "Please input max runs (mostly tested as 1000) " << std::endl;
+    std::cin >> maxRuns;
 
     std::cout << "Play vs AI - 1, rand vs AI - 2 " << std::endl;
     std::cin >> playChoice;
@@ -53,6 +67,7 @@ int main()
         Connect4AiNode* rootNode = new Connect4AiNode();
         State gameState;
         bool gameOver = false;
+        int boardFull = 0;
 
         std::cout << "Connect 4!" << std::endl;
 
@@ -80,7 +95,7 @@ int main()
 
                 runCount++;
 
-            } while (runCount < MAX_RUNS);
+            } while (runCount < maxRuns);
 
             Connect4AiNode* highestChild = rootNode->FindHighestRankingChild(explorationVal);
             GameAction bestAction = highestChild->getGameState().action;
@@ -107,6 +122,7 @@ int main()
             }
             if (gameState.getPossibleMoves().size() == 0)
             {
+                draws++;
                 gameOver = true;
                 std::cout << "DRAW" << std::endl;
                 break;
@@ -153,6 +169,12 @@ int main()
                 std::cout << "BLUE WINS!" << std::endl;
                 break;
             }
+            if (gameState.getPossibleMoves().size() == 0) {
+                draws++;
+                gameOver = true;
+                std::cout << "DRAW" << std::endl;
+                break;
+            }
 
 
             rootNode->resetNode();
@@ -164,5 +186,6 @@ int main()
     std::cout << "Game(s) Over" << std::endl;
 
     std::cout << "AI wins:  " << AIGamesWon << std::endl;
-    std::cout << "Rand/Player wins: " << randGamesWon;
+    std::cout << "Rand/Player wins: " << randGamesWon << std::endl;
+    std::cout << "Draws: " << draws << std::endl;
 }
