@@ -73,7 +73,7 @@ int main()
 
         gameState.displayBoard();
         gameOver = false;
-        rootNode->resetNode();
+        //rootNode->resetNode();
      
 
         do {

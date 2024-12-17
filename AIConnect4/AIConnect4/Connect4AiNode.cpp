@@ -152,6 +152,10 @@ void Connect4AiNode::Simulate(BOARD_SQUARE_STATE startingTurn)
 		}
 		else
 		{
+			/*int randomMove = rand() % possibleMoves.size();
+			GameAction newAction(possibleMoves[randomMove], playerTurn);
+			copyOfGameState.makeMove(newAction);
+			possibleMoves.clear();*/
 			int chosenMove = 0;
 			float weightTotal = 0;
 			float weightFinal = 0;
@@ -161,7 +165,7 @@ void Connect4AiNode::Simulate(BOARD_SQUARE_STATE startingTurn)
 			{
 				if (i == 3)
 				{
-					weights[i] += 200;
+					weights[i] += 20;
 				}
 				if (i == 2 || i == 4)
 				{
@@ -190,7 +194,7 @@ void Connect4AiNode::Simulate(BOARD_SQUARE_STATE startingTurn)
 
 
 
-			GameAction newAction(chosenMove, playerTurn);
+			GameAction newAction(possibleMoves[chosenMove], playerTurn);
 			copyOfGameState.makeMove(newAction);
 			possibleMoves.clear();
 		}
@@ -255,7 +259,7 @@ Connect4AiNode* Connect4AiNode::FindHighestRankingChild(float explorationVal) //
 	State state;
 	float nodeVisits;
 	float nodeWins;
-	float explorationParameter = 1.1;
+	float explorationParameter = explorationVal;
 	float nodeParentVisits = visits;
 	float UCBVal;
 

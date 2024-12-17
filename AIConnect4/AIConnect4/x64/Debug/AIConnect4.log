@@ -1,8 +1,7 @@
 ﻿  Connect4AiNode.cpp
 C:\Users\toddg\source\repos\AiConnect4\AIConnect4\AIConnect4\Connect4AiNode.cpp(25,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\toddg\source\repos\AiConnect4\AIConnect4\AIConnect4\Connect4AiNode.cpp(258,29): warning C4305: 'initializing': truncation from 'double' to 'float'
-C:\Users\toddg\source\repos\AiConnect4\AIConnect4\AIConnect4\Connect4AiNode.cpp(259,25): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\toddg\source\repos\AiConnect4\AIConnect4\AIConnect4\Connect4AiNode.cpp(270,38): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\toddg\source\repos\AiConnect4\AIConnect4\AIConnect4\Connect4AiNode.cpp(271,37): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\toddg\source\repos\AiConnect4\AIConnect4\AIConnect4\Connect4AiNode.cpp(265,7): warning C4101: 'canAIWinNextMove': unreferenced local variable
+C:\Users\toddg\source\repos\AiConnect4\AIConnect4\AIConnect4\Connect4AiNode.cpp(263,25): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\toddg\source\repos\AiConnect4\AIConnect4\AIConnect4\Connect4AiNode.cpp(274,38): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\toddg\source\repos\AiConnect4\AIConnect4\AIConnect4\Connect4AiNode.cpp(275,37): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\toddg\source\repos\AiConnect4\AIConnect4\AIConnect4\Connect4AiNode.cpp(269,7): warning C4101: 'canAIWinNextMove': unreferenced local variable
   AIConnect4.vcxproj -> C:\Users\toddg\source\repos\AiConnect4\AIConnect4\x64\Debug\AIConnect4.exe
