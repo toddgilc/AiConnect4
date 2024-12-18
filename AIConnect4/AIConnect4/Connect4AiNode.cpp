@@ -118,7 +118,7 @@ Connect4AiNode* Connect4AiNode::Expand()
 }
 
 
-void Connect4AiNode::Simulate(BOARD_SQUARE_STATE startingTurn)
+void Connect4AiNode::Simulate(BOARD_SQUARE_STATE startingTurn, bool weightsOnOff)
 {
 	// craete a copy of the node's game state as the starting point for the simulation
 	State copyOfGameState = getGameState();
@@ -152,51 +152,56 @@ void Connect4AiNode::Simulate(BOARD_SQUARE_STATE startingTurn)
 		}
 		else
 		{
-			/*int randomMove = rand() % possibleMoves.size();
-			GameAction newAction(possibleMoves[randomMove], playerTurn);
-			copyOfGameState.makeMove(newAction);
-			possibleMoves.clear();*/
-			int chosenMove = 0;
-			float weightTotal = 0;
-			float weightFinal = 0;
-			std::vector<float> weights = { 1,1,1,1,1,1,1 };
+			if (weightsOnOff) {
+				int chosenMove = 0;
+				float weightTotal = 0;
+				float weightFinal = 0;
+				std::vector<float> weights = { 1,1,1,1,1,1,1 };
 
-			for (int i = 0; i < possibleMoves.size(); i++)
-			{
-				if (i == 3)
+				for (int i = 0; i < possibleMoves.size(); i++)
 				{
-					weights[i] += 20;
+					if (i == 3)
+					{
+						weights[i] += 20;
+					}
+					if (i == 2 || i == 4)
+					{
+						weights[i] += 6;
+					}
 				}
-				if (i == 2 || i == 4)
+
+				weightTotal = weights[0] + weights[1] + weights[2] + weights[3] + weights[4] + weights[5] + weights[6];
+
+				for (float& i : weights)
 				{
-					weights[i] += 6;
+					i /= weightTotal;
 				}
-			}
 
-			weightTotal = weights[0] + weights[1] + weights[2] + weights[3] + weights[4] + weights[5] + weights[6];
+				float randomMove = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
 
-			for (float& i : weights)
-			{
-				i /= weightTotal;
-			}
+				for (int i = 0; i < possibleMoves.size(); i++)
+				{
+					weightFinal += weights[i];
 
-			float randomMove = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-
-			for (int i = 0; i < possibleMoves.size(); i++)
-			{
-				weightFinal += weights[i];
-
-				if (randomMove <= weightFinal) {
-					chosenMove = i;
-					break;
+					if (randomMove <= weightFinal) {
+						chosenMove = i;
+						break;
+					}
 				}
+
+
+
+				GameAction newAction(possibleMoves[chosenMove], playerTurn);
+				copyOfGameState.makeMove(newAction);
+				possibleMoves.clear();
 			}
 
-
-
-			GameAction newAction(possibleMoves[chosenMove], playerTurn);
-			copyOfGameState.makeMove(newAction);
-			possibleMoves.clear();
+			else if (!weightsOnOff) {
+				int randomMove = rand() % possibleMoves.size();
+				GameAction newAction(possibleMoves[randomMove], playerTurn);
+				copyOfGameState.makeMove(newAction);
+				possibleMoves.clear();
+			}
 		}
 
 		// check if the last move was a winning one

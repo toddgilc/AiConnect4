@@ -5,13 +5,13 @@ enum BOARD_SQUARE_STATE { NONE, RED, BLUE };	//each tile can be one of these thr
 
 struct GameBoard
 {
-	BOARD_SQUARE_STATE board[7][6]{ { BOARD_SQUARE_STATE::NONE } }; //board size 
+	BOARD_SQUARE_STATE board[7][6]{ { BOARD_SQUARE_STATE::NONE } }; //board size of 7x 6y (Y starts at 0 at top is 6 at bottom)
 };
 
 struct GameAction
 {
 	int position;
-	BOARD_SQUARE_STATE playerMove;
+	BOARD_SQUARE_STATE playerMove;	//action created of where and who played
 
 public:
 	GameAction(int newPos, BOARD_SQUARE_STATE move)

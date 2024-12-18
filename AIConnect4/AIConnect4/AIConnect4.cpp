@@ -44,12 +44,19 @@ int main()
     int gamesToPlay = 1;
     float explorationVal = 1.1;
     int maxRuns = 1000;
+    bool weightsOn = false;
+    int weightsOnOffInput = 1;
 
     std::cout << "Please input exploration val (mostly tested as 1.1) " << std::endl;
     std::cin >> explorationVal;
 
     std::cout << "Please input max runs (mostly tested as 1000) " << std::endl;
     std::cin >> maxRuns;
+
+    std::cout << "Please input if you would prefer weights applied to certain scenarios, 1 for yes, 2 for no " << std::endl;
+    std::cin >> weightsOnOffInput;
+    if (weightsOnOffInput == 1) { weightsOn = true; }
+    else { weightsOn = false; }
 
     std::cout << "Play vs AI - 1, rand vs AI - 2 " << std::endl;
     std::cin >> playChoice;
@@ -90,7 +97,7 @@ int main()
 
                 if (!expandedNode == NULL)
                 {
-                    expandedNode->Simulate(aiMarker);
+                    expandedNode->Simulate(aiMarker, weightsOn);
                 }
 
                 runCount++;
