@@ -26,9 +26,7 @@ public:
 
 	bool getTwoThrees(int pos); //used to check if a move creats a situation with two strings of 3
 
-
 	std::vector<int> getPossibleMoves(); //for ai to figure out where it can place coins 
-
 
 private:
 

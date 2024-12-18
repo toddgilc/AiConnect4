@@ -1,6 +1,7 @@
 ﻿  AIConnect4.cpp
 C:\Users\toddg\source\repos\AiConnect4\AIConnect4\AIConnect4\AIConnect4.cpp(37,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
 C:\Users\toddg\source\repos\AiConnect4\AIConnect4\AIConnect4\AIConnect4.cpp(45,26): warning C4305: 'initializing': truncation from 'double' to 'float'
+  Board.cpp
   Connect4AiNode.cpp
 C:\Users\toddg\source\repos\AiConnect4\AIConnect4\AIConnect4\Connect4AiNode.cpp(26,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
 C:\Users\toddg\source\repos\AiConnect4\AIConnect4\AIConnect4\Connect4AiNode.cpp(274,25): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
@@ -9,5 +10,5 @@ C:\Users\toddg\source\repos\AiConnect4\AIConnect4\AIConnect4\Connect4AiNode.cpp(
 C:\Users\toddg\source\repos\AiConnect4\AIConnect4\AIConnect4\Connect4AiNode.cpp(280,7): warning C4101: 'canAIWinNextMove': unreferenced local variable
   State.cpp
   Generating Code...
-C:\Users\toddg\source\repos\AiConnect4\AIConnect4\AIConnect4\AIConnect4.cpp(15): warning C4715: 'checkFullRow': not all control paths return a value
+C:\Users\toddg\source\repos\AiConnect4\AIConnect4\AIConnect4\AIConnect4.cpp(15): warning C4715: 'checkFullStack': not all control paths return a value
   AIConnect4.vcxproj -> C:\Users\toddg\source\repos\AiConnect4\AIConnect4\x64\Debug\AIConnect4.exe

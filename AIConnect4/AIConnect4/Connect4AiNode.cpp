@@ -22,7 +22,7 @@ BOARD_SQUARE_STATE Connect4AiNode::getOppositeMove(BOARD_SQUARE_STATE state)
 
 
 Connect4AiNode::Connect4AiNode()
-{
+{ 
 	srand(time(0));
 	isEndState = false;
 	parent = nullptr;
@@ -35,7 +35,7 @@ Connect4AiNode::~Connect4AiNode()
 	parent = nullptr;
 	for (auto branch : branches)
 	{
-		delete branch;
+		delete branch; //clears vector of nodes
 	}
 	branches.clear();
 	availableMoves.clear();
@@ -63,16 +63,16 @@ void Connect4AiNode::generatePossibleMoves()
 }
 
 
-Connect4AiNode* Connect4AiNode::Select(float explorationVal)
+Connect4AiNode* Connect4AiNode::Select(float explorationVal) //recursive function to chose a leaf node to expand from
 {
 	if (branches.size() == 0 || availableMoves.size() > 0) { return this; }
 	else {
 		int randomNum = rand() % 10;
-		if (randomNum == 1) {
+		if (randomNum == 1) { //10% will test a random branch 
 			int randomBranch = rand() % branches.size();
 			return branches[randomBranch]->Select(explorationVal);
 		}
-		else {
+		else {	//otherwise will go on to expand the best 
 			Connect4AiNode* highest = FindHighestRankingChild(explorationVal);
 			return highest->Select(explorationVal);
 		}
@@ -80,7 +80,7 @@ Connect4AiNode* Connect4AiNode::Select(float explorationVal)
 }
 
 
-Connect4AiNode* Connect4AiNode::Expand()
+Connect4AiNode* Connect4AiNode::Expand() //creates a new leaf node from the previous to create a new state
 {
 	if (isEndState || availableMoves.size() == 0)
 		return NULL; // if this is game end state, we cannot expand
@@ -119,7 +119,7 @@ Connect4AiNode* Connect4AiNode::Expand()
 }
 
 
-void Connect4AiNode::Simulate(BOARD_SQUARE_STATE startingTurn, bool weightsOnOff)
+void Connect4AiNode::Simulate(BOARD_SQUARE_STATE startingTurn, bool weightsOnOff) //finds the value of a node by simulating the rest of play (either until win or forced end state)
 {
 	// craete a copy of the node's game state as the starting point for the simulation
 	State copyOfGameState = getGameState();
@@ -157,48 +157,48 @@ void Connect4AiNode::Simulate(BOARD_SQUARE_STATE startingTurn, bool weightsOnOff
 				int chosenMove = 0;
 				float weightTotal = 0;
 				float weightFinal = 0;
-				std::vector<float> weights = { 1,1,1,1,1,1,1 };
+				std::vector<float> weights = { 1,1,1,1,1,1,1 }; 
 
-				for (int i = 0; i < possibleMoves.size(); i++)
+				for (int i = 0; i < possibleMoves.size(); i++) //applies weights to certain situations from the posible moves
 				{
 					if (i == 3)
-					{
+					{	//centre column is weighted as it is the best position on the board
 						weights[i] += 12;
 					}
 					if (i == 2 || i == 4)
-					{
+					{	//columns adjecent are also more valuable
 						weights[i] += 6;
 					}
-					if (copyOfGameState.getTwoThrees(i))
+					if (copyOfGameState.getTwoThrees(i))	//a move that creates 2 rows of three heavily weighted as it is an almost guaranteed win
 					{
 						weights[i] += 20;
 					}
 				}
 
-				weightTotal = weights[0] + weights[1] + weights[2] + weights[3] + weights[4] + weights[5] + weights[6];
+				weightTotal = weights[0] + weights[1] + weights[2] + weights[3] + weights[4] + weights[5] + weights[6]; //sum the weights
 
 				for (float& i : weights)
 				{
 					i /= weightTotal;
-				}
+				}	//normalises weights values into all summed = 1
 
-				float randomMove = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+				float randomMove = static_cast <float> (rand()) / static_cast <float> (RAND_MAX); //find a random value between 0 and 1
 
-				for (int i = 0; i < possibleMoves.size(); i++)
+				for (int i = 0; i < possibleMoves.size(); i++) //loop checking to find the first highest weighted move above the random value so our play is encouraging specific outcomes
 				{
 					weightFinal += weights[i];
 
 					if (randomMove <= weightFinal) {
 						chosenMove = i;
-						break;
+						break; //escapes to make the move once the first is found
 					}
 				}
-
 
 
 				GameAction newAction(possibleMoves[chosenMove], playerTurn);
 				copyOfGameState.makeMove(newAction);
 				possibleMoves.clear();
+
 			}
 
 			else if (!weightsOnOff) {
@@ -233,7 +233,7 @@ void Connect4AiNode::CalcResult(BOARD_SQUARE_STATE winner)
 {
 	if (winner == BOARD_SQUARE_STATE::BLUE)
 	{
-		Backpropagate(1);
+		Backpropagate(1); //tells backpropagate states where ai wins are the outcome we want to increase rank
 	}
 	else if (winner == BOARD_SQUARE_STATE::RED)
 	{
@@ -246,11 +246,11 @@ void Connect4AiNode::CalcResult(BOARD_SQUARE_STATE winner)
 }
 
 
-void Connect4AiNode::Backpropagate(int result)
+void Connect4AiNode::Backpropagate(int result) //updates vlaue of state and the states leading into it
 {
-	visits++;
+	visits++; 
 
-	if (result > 0) {
+	if (result > 0) { //if positive result improve its ranking
 		ranking += result;
 	}
 
@@ -260,7 +260,7 @@ void Connect4AiNode::Backpropagate(int result)
 }
 
 
-Connect4AiNode* Connect4AiNode::FindHighestRankingChild(float explorationVal) //seen multiple versions of the UCB formula so using the one from week 6 ppt
+Connect4AiNode* Connect4AiNode::FindHighestRankingChild(float explorationVal) //uses ucb formula to calculate the confidence in a node
 {
 	if (branches.size() == 0)
 	{
@@ -296,15 +296,16 @@ Connect4AiNode* Connect4AiNode::FindHighestRankingChild(float explorationVal) //
 			{
 				return branches[i];
 			}
-		}
+		}	//makes sure the ai will take scenarios where it can make a 4 regardless
 
-		UCBVal = (nodeWins/nodeVisits) + explorationParameter * sqrt((log(nodeParentVisits) / nodeVisits));
+		UCBVal = (nodeWins/nodeVisits) + explorationParameter * sqrt((log(nodeParentVisits) / nodeVisits));	//confidence value in the states odds
 
 		if (UCBVal > maxRanking) 
 		{
 			std::vector<int> possibleOppMoves = state.getPossibleMoves();
 			bool setNewMoveAllowed = true;
-			for (int j = 0; j < possibleOppMoves.size(); j++)
+
+			for (int j = 0; j < possibleOppMoves.size(); j++)	//check for if the state has the opponent able to play a move rthat will win the game and disallow that from being the selected branch
 			{
 				GameAction newAction(possibleOppMoves[j], RED);
 				state.makeMove(newAction);
@@ -314,7 +315,7 @@ Connect4AiNode* Connect4AiNode::FindHighestRankingChild(float explorationVal) //
 				}
 			}
 
-			if (setNewMoveAllowed) {
+			if (setNewMoveAllowed) {	//updates the current best option if allowed and is better than previous best
 				maxIndex = i;
 				maxRanking = UCBVal;
 			}
