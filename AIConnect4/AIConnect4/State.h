@@ -20,9 +20,9 @@ public:
 	void displayBoard();	//draws to screen
 	void makeMove(GameAction newAction); //move struct
 	BOARD_SQUARE_STATE checkWin();	//check the winner of the game after each move
-	bool checkDown(int y, int x);
-	bool checkSides(int y, int x);
-	bool checkDiag(int y, int x);	//functions used to seperate out check win (useful for testing)
+	bool checkDown(int y, int x, int numInRow);
+	bool checkSides(int y, int x, int numInRow);
+	bool checkDiag(int y, int x, int numInRow);	//functions used to seperate out check win (useful for testing)
 
 	bool getTwoThrees(int pos); //used to check if a move creats a situation with two strings of 3
 

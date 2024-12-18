@@ -169,7 +169,10 @@ void Connect4AiNode::Simulate(BOARD_SQUARE_STATE startingTurn, bool weightsOnOff
 					{
 						weights[i] += 6;
 					}
-
+					if (copyOfGameState.getTwoThrees(i))
+					{
+						weights[i] += 20;
+					}
 				}
 
 				weightTotal = weights[0] + weights[1] + weights[2] + weights[3] + weights[4] + weights[5] + weights[6];

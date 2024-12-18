@@ -63,7 +63,7 @@ BOARD_SQUARE_STATE State::checkWin() //break at 0 only goes to 3
         {
             if (board.board[i][j] != NONE) {
            
-                if (checkDown(i, j) || checkSides(i, j) || checkDiag(i, j))
+                if (checkDown(i, j, 4) || checkSides(i, j, 4) || checkDiag(i, j, 4))
                 {
                     return board.board[i][j];
                 }
@@ -75,13 +75,13 @@ BOARD_SQUARE_STATE State::checkWin() //break at 0 only goes to 3
 }
 
 
-bool State::checkDown(int x, int y)
+bool State::checkDown(int x, int y, int numRow)
 {
     int vertCount = 1;
 
     if (y + 4 > boardY + 1) { return false; }
 
-    for (int i = 1; i <= 4; i++)
+    for (int i = 1; i <= numRow; i++)
     {
         if (board.board[x][y] == board.board[x][y + i])
         {
@@ -90,14 +90,14 @@ bool State::checkDown(int x, int y)
         else { break; }
     }
 
-    return vertCount >= 4;
+    return vertCount >= numRow;
 }
 
-bool State::checkSides(int x, int y)
+bool State::checkSides(int x, int y, int numRow)
 {
     int horzCount = 1;
 
-    for (int i = 1; i <= 4; i++)
+    for (int i = 1; i <= numRow; i++)
     {
          if (x + i <= boardX + 1 && board.board[x][y] == board.board[x + i][y])
          {
@@ -107,7 +107,7 @@ bool State::checkSides(int x, int y)
     }
 
 
-    for (int i = 1; i <= 4; i++)
+    for (int i = 1; i <= numRow; i++)
     {
          if (x - i >= boardX + 1 && board.board[x][y] == board.board[x - i][y])
          {
@@ -116,16 +116,16 @@ bool State::checkSides(int x, int y)
          else { break; }
     }
   
-    return horzCount >= 4;
+    return horzCount >= numRow;
 }
 
 
-bool State::checkDiag(int x, int y)
+bool State::checkDiag(int x, int y, int numRow)
 {
     int diagonalUpRightCount = 1;  
     int diagonalDownRightCount = 1; 
 
-    for (int i = 1; i <= 4; i++) {
+    for (int i = 1; i <= numRow; i++) {
        
         if (x + i < boardX + 1 && y - i >= 0 && board.board[x][y] == board.board[x + i][y - i]) {
             diagonalUpRightCount++;
@@ -135,7 +135,7 @@ bool State::checkDiag(int x, int y)
         }
     }
 
-    for (int j = 1; j <= 4; j++) {
+    for (int j = 1; j <= numRow; j++) {
       
         if (x + j < boardX + 1 && y + j < boardY + 1 && board.board[x][y] == board.board[x + j][y + j]) {
             diagonalDownRightCount++;
@@ -145,16 +145,41 @@ bool State::checkDiag(int x, int y)
         }
     }
 
-    return (diagonalUpRightCount >= 4 || diagonalDownRightCount >= 4);
+    return (diagonalUpRightCount >= numRow || diagonalDownRightCount >= numRow);
 }
 
 bool State::getTwoThrees(int pos)
 {
+    int threesCount = 0;
+
+    for (int i = 0; i < boardY + 1; i++)
+    {
+        if (board.board[i][pos] != NONE) {
+
+            if (checkDown(i, pos, 3) || checkSides(i, pos, 3) || checkDiag(i, pos, 3))
+            {
+                threesCount++;
+            }
+        }
+    }
 
 
+    for (int i = 0; i < boardY + 1; i++)
+    {
+        for (int j = 0; j < boardX + 1; j++)
+        {
+            if (board.board[i][j] != NONE) {
+
+                if (checkDown(i, j, 3) || checkSides(i, j, 3) || checkDiag(i, j, 3))
+                {
+                    threesCount++;
+                }
+            }
+        }
+    }
 
 
-    return false;
+    return threesCount >= 2;
 }
 
 
