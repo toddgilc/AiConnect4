@@ -26,7 +26,6 @@ public:
 
 	BOARD_SQUARE_STATE getOppositeMove(BOARD_SQUARE_STATE state);	//switches players
 
-
 	//node functions for "traversing" the mcts tree
 	Connect4AiNode* Select(float explorationVal);
 	Connect4AiNode* Expand();

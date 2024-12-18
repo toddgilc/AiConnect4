@@ -125,7 +125,7 @@ bool State::checkDiag(int x, int y)
     int diagonalUpRightCount = 1;  
     int diagonalDownRightCount = 1; 
 
-    for (int i = 1; i <= 3; i++) {
+    for (int i = 1; i <= 4; i++) {
        
         if (x + i < boardX + 1 && y - i >= 0 && board.board[x][y] == board.board[x + i][y - i]) {
             diagonalUpRightCount++;
@@ -135,7 +135,7 @@ bool State::checkDiag(int x, int y)
         }
     }
 
-    for (int j = 1; j <= 3; j++) {
+    for (int j = 1; j <= 4; j++) {
       
         if (x + j < boardX + 1 && y + j < boardY + 1 && board.board[x][y] == board.board[x + j][y + j]) {
             diagonalDownRightCount++;
@@ -146,6 +146,15 @@ bool State::checkDiag(int x, int y)
     }
 
     return (diagonalUpRightCount >= 4 || diagonalDownRightCount >= 4);
+}
+
+bool State::getTwoThrees(int pos)
+{
+
+
+
+
+    return false;
 }
 
 

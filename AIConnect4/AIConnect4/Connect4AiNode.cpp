@@ -20,6 +20,7 @@ BOARD_SQUARE_STATE Connect4AiNode::getOppositeMove(BOARD_SQUARE_STATE state)
 }
 
 
+
 Connect4AiNode::Connect4AiNode()
 {
 	srand(time(0));
@@ -162,12 +163,13 @@ void Connect4AiNode::Simulate(BOARD_SQUARE_STATE startingTurn, bool weightsOnOff
 				{
 					if (i == 3)
 					{
-						weights[i] += 20;
+						weights[i] += 12;
 					}
 					if (i == 2 || i == 4)
 					{
 						weights[i] += 6;
 					}
+
 				}
 
 				weightTotal = weights[0] + weights[1] + weights[2] + weights[3] + weights[4] + weights[5] + weights[6];
@@ -197,6 +199,7 @@ void Connect4AiNode::Simulate(BOARD_SQUARE_STATE startingTurn, bool weightsOnOff
 			}
 
 			else if (!weightsOnOff) {
+
 				int randomMove = rand() % possibleMoves.size();
 				GameAction newAction(possibleMoves[randomMove], playerTurn);
 				copyOfGameState.makeMove(newAction);
